@@ -1,0 +1,35 @@
+version: '3.1'
+
+services:
+
+  db:
+    build: ./db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 44070320
+    ports:
+      - 3306:3306
+    volumes: 
+      - ./database:/var/lib/mysql
+
+  adminer:
+    build: ./adminer
+    restart: always
+    ports:
+      - 8080:8080
+    links:
+      - db  
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "8090:80"
+    volumes:
+      - /var/www/:/www/
+    links:
+      - php
+      
+  php:
+    image: php:7-fpm
+    volumes:
+      - /var/www/:/www/
