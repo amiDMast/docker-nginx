@@ -6,7 +6,7 @@ services:
     build: ./db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 44070320
+      MYSQL_ROOT_PASSWORD: root_password
     ports:
       - 3306:3306
     volumes: 
@@ -23,13 +23,13 @@ services:
   nginx:
     build: ./nginx
     ports:
-      - "8090:80"
+      - "80:80"
     volumes:
-      - /var/www/:/www/
+      - ./www/:/www/
     links:
       - php
       
   php:
     image: php:7-fpm
     volumes:
-      - /var/www/:/www/
+      - ./www/:/www/
